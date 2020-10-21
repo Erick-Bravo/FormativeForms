@@ -4,10 +4,13 @@ block content
   table
     thead: h2 Existing Users
       tr
-        th ID
+        th id
         th First Name
         th Last Name
         th Email
+        th Age
+        th Favorite Beatle
+        th Likes Ice Cream
     tbody
       each user in users
         tr
@@ -15,3 +18,6 @@ block content
           td #{user.firstName}
           td #{user.lastName}
           td #{user.email}
+          td #{user.age}
+          td #{user.favoriteBeatle}
+          td #{user.favoriteIceCream}

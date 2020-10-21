@@ -6,10 +6,10 @@ block content
     input(type="hidden" name="_csrf" value="csrfToken")
 
     label(for="firstName") First Name
-    input(type="firstName" id="firstName" name="firstName")
+    input(type="text" id="firstName" name="firstName")
 
     label(for="lastName") Last name
-    input(type="lastName" id="lastName" name="lastName")
+    input(type="text" id="lastName" name="lastName")
 
     label(for="email") Email
     input(type="email" id="email" name="email")
@@ -18,4 +18,6 @@ block content
     input(type="password" id="password" name="password")
 
     label(for="confirmedPassword") Confirmed Password
-    input(type="confirmedPassword" id="confirmedPassword" name="confirmedPassword")
+    input(type="password" id="confirmedPassword" name="confirmedPassword")
+
+    input(type="submit" id="submit" value="Create User")

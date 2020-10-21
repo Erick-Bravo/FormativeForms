@@ -26,10 +26,13 @@ app.get("/", (req, res) => {
 });
 
 app.get("/create", csrfProtection, (req, res) => {
+  console.log(req.csrfToken.toString())
 	res.render("create-user", {
 		key: "Create User"
 	})
-})
+});
+
+app.post('/create',)
 
 app.listen(port, () => console.log(`Example app listening on port ${port}!`));
 
