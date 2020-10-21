@@ -1,0 +1,15 @@
+extends layout.pug
+
+block content
+  table
+    thead
+      tr
+        th First Name
+        th Last Name
+        th Email
+    tbody
+      each user in users
+        tr
+          td #{user.firstName}
+          td #{user.lastName}
+          td #{user.email}
