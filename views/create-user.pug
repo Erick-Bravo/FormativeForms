@@ -6,10 +6,11 @@ block content
     div
       ul
         each error in errors
+          p The following errors were found:
           li #{error}
 
   form(method="post" action="/create")
-    input(type="hidden" name="_csrf" value="csrfToken")
+    input(type="hidden" name="_csrf" value= csrfToken)
 
     label(for="firstName") First Name
     input(type="text" id="firstName" name="firstName")

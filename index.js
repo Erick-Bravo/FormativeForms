@@ -6,8 +6,8 @@ const app = express();
 const port = process.env.PORT || 3000;
 const csrfProtection = csrf( { cookie: true} )
 app.use(cookieParser());
-//set cookie true and other requirements
-app.use(express.urlencoded( { extended: true } ))
+
+app.use(express.urlencoded( { extended: true }))
 
 
 app.set("view engine", "pug");
@@ -27,7 +27,8 @@ app.get("/", (req, res) => {
 
 app.get("/create", csrfProtection, (req, res) => {
 	res.render("create-user", {
-		key: "Create User"
+    title: "Create User",
+    csrfToken: req.csrfToken()
 	})
 });
 
@@ -42,7 +43,7 @@ const validateUser = (req, res, next) => {
 		errors.push("Please provide a last name.")
 	}
 	if(!email) {
-		errors.push("Please provide a email.")
+		errors.push("Please provide an email.")
 	}
 	if(!password) {
 		errors.push("Please provide a password.")
@@ -51,12 +52,14 @@ const validateUser = (req, res, next) => {
 	next()
 }
 
-app.post('/create', csrfProtection, (req, res) => {
+app.post('/create', csrfProtection, validateUser, (req, res) => {
 	const { id, firstName, lastName, email, password } = req.body
-
-	if (req.errors.length < 0) {
-		res.render("create-user", { csrfToken: req.csrfToken(), id, firstName, lastName, email, password })
-	}
+	if (req.errors.length > 0) {
+    res.render("create-user", { csrfToken: req.csrfToken(), id, firstName, lastName, email, password, errors: req.errors })
+  }
+  else{
+    res.redirect("/")
+  }
 })
 
 app.listen(port, () => console.log(`Example app listening on port ${port}!`));
