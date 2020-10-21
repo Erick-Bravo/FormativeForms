@@ -3,6 +3,9 @@ const express = require("express");
 const app = express();
 const port = process.env.PORT || 3000;
 
+app.use(cookieParser());
+//set cookie true and other requirements
+
 app.set("view engine", "pug");
 
 const users = [
