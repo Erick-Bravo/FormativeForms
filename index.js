@@ -32,8 +32,9 @@ app.get("/create", csrfProtection, (req, res) => {
 	})
 });
 
+
 const validateUser = (req, res, next) => {
-	const { firstName, lastName, email, password } = req.body
+	const { firstName, lastName, email, password, confirmedPassword } = req.body
 	const errors = [];
 
 	if(!firstName) {
@@ -48,6 +49,9 @@ const validateUser = (req, res, next) => {
 	if(!password) {
 		errors.push("Please provide a password.")
 	}
+	if(password !== confirmedPassword) {
+		errors.push("The provided values for the password and password confirmation fields did not match.")
+	}
 	req.errors = errors
 	next()
 }
@@ -55,13 +59,21 @@ const validateUser = (req, res, next) => {
 app.post('/create', csrfProtection, validateUser, (req, res) => {
 	const { id, firstName, lastName, email, password } = req.body
 	if (req.errors.length > 0) {
-    res.render("create-user", { csrfToken: req.csrfToken(), id, firstName, lastName, email, password, errors: req.errors })
+		res.render("create-user", { csrfToken: req.csrfToken(), id, firstName, lastName, email, password, errors: req.errors })
+	return
   }
-  else{
-    res.redirect("/")
-  }
+    else{
+		const user = {
+			id,
+			firstName,
+			lastName,
+			email
+		}
+		users.push(user)
+		res.redirect("/")
+	    }
 })
 
-app.listen(port, () => console.log(`Example app listening on port ${port}!`));
+	app.listen(port, () => console.log(`Example app listening on port ${port}!`));
 
-module.exports = app;
+	module.exports = app;
