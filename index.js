@@ -1,10 +1,14 @@
 const express = require("express");
+const csrf = require("csurf");
+const cookieParser = require("cookie-parser");
 
 const app = express();
 const port = process.env.PORT || 3000;
-
+const csrfProtection = csrf( { cookie: true} )
 app.use(cookieParser());
 //set cookie true and other requirements
+app.use(express.urlencoded())
+
 
 app.set("view engine", "pug");
 
@@ -20,6 +24,12 @@ const users = [
 app.get("/", (req, res) => {
 	res.render("index", { users });
 });
+
+app.get("/create", csrfProtection, (req, res) => {
+	res.render("create-user", {
+		key: "Create User"
+	})
+})
 
 app.listen(port, () => console.log(`Example app listening on port ${port}!`));
 
